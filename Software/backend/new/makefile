@@ -1,4 +1,4 @@
-GH_REPO = https://github.com/JKUATSES/WebsiteChallenge2021.git
+GH_REPO = https://github.com/JKUATSES/2021-project-hack.git
 C_DIR = chronograf/
 I_DIR = influxdb/
 K_DIR = kapacitor/
