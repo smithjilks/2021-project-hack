@@ -64,7 +64,7 @@ certificatesResolvers:
       storage: /ssl-certs/acme.json
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       httpChallenge:
-        entryPoint: web, websecure, mqtt, mqttsecure
+        entryPoint: web
 
 # Provider Configuration
 # ---
