@@ -15,7 +15,6 @@ services:
     #   - "1883:1883"
     expose: 
       - "1883"
-      - "8883"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.mqtt.rule=Host(`sesiot.qualislabs.co.ke`)"
