@@ -18,7 +18,7 @@ services:
       - "8883"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mqtt.rule=Host(`40.114.126.220`)"
+      - "traefik.http.routers.mqtt.rule=Host(`sesiot.qualislabs.co.ke`)"
       - "traefik.http.routers.mqtt.entrypoints=mqtt,mqttsecure"
       - "traefik.http.routers.mqtt.tls=true"
       - "traefik.http.routers.mqtt.tls.certresolver=production"
