@@ -37,6 +37,12 @@ entryPoints:
   websecure:
     address: :443
 
+  mqtt:
+    address: :1883
+
+  mqttsecure:
+    address: :8883
+
 # Certificates configuration
 # ---
 # TODO: Custmoize your Cert Resolvers and Domain settings
