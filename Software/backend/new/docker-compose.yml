@@ -87,8 +87,8 @@ services:
       - INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mqtt_websocket.entrypoints=web"
-      - "traefik.tcp.routers.mqtt.rule=HostSNI(`*`)"
+      - "traefik.http.routers.web.entrypoints=web"
+      - "traefik.tcp.routers.chronograf.rule=HostSNI(`*`)"
 
   grafana:
     image: grafana/grafana:latest
