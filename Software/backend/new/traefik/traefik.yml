@@ -25,14 +25,14 @@ api:
 # ---
 entryPoints:
   web:
-    address: :8888
+    address: :80
     # (Optional) Redirect to HTTPS
     # ---
-    # http:
-    #   redirectons:
-    #     entryPoint:
-    #       to: websecure
-    #       scheme: https
+    http:
+      redirectons:
+        entryPoint:
+          to: websecure
+          scheme: https
 
   websecure:
     address: :443
