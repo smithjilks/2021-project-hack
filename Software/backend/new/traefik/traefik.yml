@@ -57,7 +57,7 @@ certificatesResolvers:
       storage: /ssl-certs/acme.json
       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
       httpChallenge:
-        entryPoint: web, websecure, mqtt, mqttsecure
+        entryPoint: web
   production:
     acme:
       email: rodney@qualislabs.co.ke  # TODO: Change this to your email
