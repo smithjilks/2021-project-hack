@@ -21,7 +21,7 @@ services:
       - "traefik.http.routers.mqtt.rule=Host(`sesiot.qualislabs.co.ke`)"
       - "traefik.http.routers.mqtt.entrypoints=mqtt,mqttsecure"
       - "traefik.http.routers.mqtt.tls=true"
-      - "traefik.http.routers.mqtt.tls.certresolver=production"
+      - "traefik.http.routers.mqtt.tls.certresolver=staging"
 
   influxdb:
     image: influxdb:1.7-alpine
