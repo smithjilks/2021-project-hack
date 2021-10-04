@@ -94,12 +94,6 @@ services:
       - INFLUXDB_URL=http://influxdb:8086
       - INFLUXDB_USERNAME=${INFLUXDB_USERNAME}
       - INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.web.entrypoints=websecure"
-      - "traefik.tcp.routers.chronograf.rule=HostSNI(`*`)"
-      - "traefik.tcp.routers.chronograf.tls=True"
-      - "traefik.http.routers.mqtt_websocket.tls.certresolver=staging"
 
   grafana:
     image: grafana/grafana:latest
