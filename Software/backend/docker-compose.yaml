@@ -48,8 +48,6 @@ services:
       - ./telegraf:/etc/telegraf:ro
       # Mount for Docker API access
       - /var/run/docker.sock:/var/run/docker.sock
-      # - ${PWD}/telegraph:/var/www/html/upload
-      # - ${PWD}/telegraph/config.php:/var/www/html/config.php
     depends_on:
       - rabbitmq
       - influxdb
