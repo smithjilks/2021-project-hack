@@ -26,3 +26,7 @@ remove-files:
 
 logs:
 	watch docker-compose logs
+
+clear_db:
+	sudo rm -rf chronograph/data grafana/data grafana/provisioning influxdb/data kapacitor/data
+	mkdir kapacitor/data chronograph/data influxdb/data
