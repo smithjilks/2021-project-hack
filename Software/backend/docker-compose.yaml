@@ -2,28 +2,22 @@ version: '3'
 services:
   
   rabbitmq:
-    build: .
+    build: rabbitmq/
     image: mqtt-rabbitmq
+    container_name: "mqtt"
     environment:
       - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
       - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
-    # ports:
-    #   - "15672:15672"
-    #   - "5672:5672"
-    #   - "1883:1883"
-    expose: 
-      - "1883"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.mqtt.rule=Host(`sesiot.qualislabs.co.ke`)"
-      - "traefik.http.routers.mqtt.entrypoints=mqtt,mqttsecure"
-      - "traefik.http.routers.mqtt.tls=true"
-      - "traefik.http.routers.mqtt.tls.certresolver=staging"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+      - "1883:1883"
 
   influxdb:
     image: influxdb:1.7-alpine
+    container_name: "influxdb"
     volumes:
       # Mount for influxdb data directory
       - ./influxdb/data:/var/lib/influxdb
@@ -43,6 +37,7 @@ services:
 
   telegraf:
     image: telegraf:1.11-alpine
+    container_name: "telegraf"
     environment:
       HOSTNAME: "telegraf-getting-started"
     # Telegraf requires network access to InfluxDB
@@ -50,7 +45,7 @@ services:
       - influxdb
     volumes:
       # Mount for telegraf configuration
-      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./telegraph:/etc/telegraf:ro
       # Mount for Docker API access
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
@@ -59,6 +54,7 @@ services:
 
   kapacitor:
     image: kapacitor:1.5-alpine
+    container_name: "kapacitor"
     volumes:
       # Mount for kapacitor data directory
       - ./kapacitor/data/:/var/lib/kapacitor
@@ -73,11 +69,12 @@ services:
 
   chronograf:
     image: chronograf:1.7-alpine
+    container_name: "chronograf"
     environment:
       RESOURCES_PATH: "/usr/share/chronograf/resources"
     volumes:
       # Mount for chronograf database
-      - ./chronograf/data/:/var/lib/chronograf/
+      - ./chronograph/data/:/var/lib/chronograf/
     links:
       # Chronograf requires network access to InfluxDB and Kapacitor
       - influxdb
@@ -96,6 +93,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
+    container_name: "grafana"
     ports:
       - '3000:3000'
     volumes:
@@ -109,8 +107,9 @@ services:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
     env_file:
-    - 'env.grafana'
+    - './grafana/config/env.grafana'
     user: "0"
+  
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
@@ -121,22 +120,3 @@ services:
       - '9443:9443'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  traefik:
-    image: "traefik:v2.5"
-    container_name: "traefik"
-    ports:
-      - "80:80"
-      - "443:443"
-      - "1883:1883"
-      - "8883:8883"
-      # (Optional) Expose Dashboard
-      - "8080:8080"  # Don't do this in production!
-    volumes:
-      - ./traefik:/etc/traefik
-      - traefik-ssl-certs:/ssl-certs
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-
-
-volumes:
-  traefik-ssl-certs:
-    driver: local

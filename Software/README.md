@@ -102,7 +102,7 @@ This will give us insight into how you approached the challenge.
 02. Make a topic branch. In your GitHub, keep the master branch clean. Pull all changes, make sure your repository is up to date.
 
 ``` shell
-cd WebsiteChallenge2021/Software
+cd 2021-project-hack/Software
 git pull origin main
 ```
 
