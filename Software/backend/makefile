@@ -14,6 +14,7 @@ build:
 	docker-compose build
 
 start:
+	chmod 755 rabbitmq/cluster-entrypoint.sh
 	docker-compose up -d
 
 stop:
@@ -28,5 +29,5 @@ logs:
 	watch docker-compose logs
 
 clear_db:
-	sudo rm -rf chronograph/data grafana/data grafana/provisioning influxdb/data kapacitor/data
-	mkdir kapacitor/data chronograph/data influxdb/data
+	sudo rm -rf chronograph/data grafana/data grafana/provisioning influxdb/data kapacitor/data elasticsearch/data logstash/data kibana/data
+	mkdir kapacitor/data chronograph/data influxdb/data elasticsearch/data logstash/data kibana/data
