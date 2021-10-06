@@ -123,6 +123,7 @@ services:
   
   kibana:
     build: kibana/
+    container_name: "kibana"
     volumes:
       - ./kibana/config/:/etc/kibana/
     ports:
@@ -132,7 +133,10 @@ services:
 
   logstash:
     build: logstash/
+    container_name: "logstash"
     command: -f /etc/logstash/conf.d/
+    links:
+      - rabbitmq
     volumes:
       - ./logstash/config:/etc/logstash/conf.d
     ports:
@@ -143,11 +147,12 @@ services:
   
   elasticsearch:
     build: elasticsearch/
+    container_name: "elasticsearch"
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
     volumes:
-      - ./data/es-data:/usr/share/elasticsearch/data
+      - ./elasticsearch/data/es-data:/usr/share/elasticsearch/data
 
