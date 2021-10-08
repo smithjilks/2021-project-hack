@@ -1,6 +1,8 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
+#include "wifi.hpp"
+
 #define RST_PIN         22         // Configurable, see typical pin layout above
 #define SS_PIN          5      // Configurable, see typical pin layout above
 
@@ -14,6 +16,9 @@ MFRC522::MIFARE_Key key;
  void setup() {
     Serial.begin(9600); // Initialize serial communications with the PC
     while (!Serial);    // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
+    //setup wifi
+    wifi::_setup();
+    
     SPI.begin();        // Init SPI bus
     mfrc522.PCD_Init(); // Init MFRC522 card
 
@@ -31,6 +36,13 @@ MFRC522::MIFARE_Key key;
  * Main loop.
  */
 void loop() {
+    // check the status of wifi
+    if(!wifi::_loop()){
+      Serial.println("...Connection lost");
+      wifi::launchWeb();
+      wifi::setupAP();// Setup HotSpot
+      return;
+    }
     // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
     if ( ! mfrc522.PICC_IsNewCardPresent())
         return;
