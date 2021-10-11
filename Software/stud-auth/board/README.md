@@ -19,7 +19,7 @@ Info on the board [SES Dev Board](https://github.com/JKUATSES/sesBoardv1)
 
 Each tag has a Unique ID (UID), a read and writable memory. The UID is a 8-bit array as shown below:
 
-[!UIDs](https://github.com/smithjilks/2021-project-hack/blob/main/Software/stud-auth/board/imgs/uids.png)
+![UIDs](https://github.com/smithjilks/2021-project-hack/blob/stud-auth/Software/stud-auth/board/imgs/uids.png)
 
 ## Project
 
