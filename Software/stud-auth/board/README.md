@@ -23,4 +23,4 @@ Each tag has a Unique ID (UID), a read and writable memory. The UID is a 8-bit a
 
 ## Project
 
-The project takes advantages of the UIDs.
+The project takes advantage of the UIDs.

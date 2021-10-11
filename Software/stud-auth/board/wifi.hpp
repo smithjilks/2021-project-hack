@@ -1,5 +1,5 @@
-#ifndef WIFI_H
-#define WIFI_H
+#ifndef WIFI_HPP
+#define WIFI_HPP
 
 #include <WiFi.h>
 #include <HTTPClient.h>
