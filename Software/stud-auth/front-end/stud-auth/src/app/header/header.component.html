@@ -1,0 +1,21 @@
+<mat-toolbar color = "primary" class="md-medium-tall">
+  <span> <a routerLink=""> App </a></span>
+  <span class="spacer"> </span>
+<ul>
+  <li *ngIf = "userIsAuthenticated && userType === 'admin'">
+    <a mat-button routerLink="/create-student" routerLinkActive="mat-accent"> Create Student</a>
+  </li>
+  <li *ngIf = "userIsAuthenticated && userType === 'admin'">
+    <a mat-button routerLink="/access-control" routerLinkActive="mat-accent"> Access Control</a>
+  </li>
+  <li *ngIf = "!userIsAuthenticated">
+    <a mat-button routerLink="/auth/login" routerLinkActive="mat-accent"> Login</a>
+  </li>
+  <li *ngIf = "!userIsAuthenticated">
+    <a mat-button routerLink="/auth/register" routerLinkActive="mat-accent"> Register</a>
+  </li>
+  <li  *ngIf = "userIsAuthenticated">
+    <button mat-button (click)="onLogout()"> Logout</button>
+  </li>
+</ul>
+</mat-toolbar>
