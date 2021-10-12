@@ -8,6 +8,6 @@ const tagSchema = mongoose.Schema({
   isActive: {type: Boolean, required: true}
 });
 
-userSchema.plugin(uniqueValidator);
+tagSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Tag', tagSchema);
