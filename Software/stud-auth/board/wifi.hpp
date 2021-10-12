@@ -1,5 +1,5 @@
-#ifndef WIFI_H
-#define WIFI_H
+#ifndef WIFI_HPP
+#define WIFI_HPP
 
 #include <WiFi.h>
 #include <HTTPClient.h>
@@ -20,21 +20,40 @@ String content;
 String esid;
 String epass = "";
 
-bool testWifi(void) {
-  int c = 0;
-  //Serial.println("Waiting for Wifi to connect");
-  while ( c < 20 ) {
-    if (WiFi.status() == WL_CONNECTED)
-    {
-      return true;
-    }
-    delay(500);
-    Serial.print("*");
-    c++;
+// wifi init method
+void init(void) {
+  Serial.println();
+  Serial.println("Disconnecting current wifi connection");
+  WiFi.disconnect();
+  EEPROM.begin(512); //Initialasing EEPROM
+  delay(10);
+  pinMode(15, INPUT);
+  Serial.println();
+  Serial.println();
+  Serial.println("Startup");
+
+  //---------------------------------------- Read eeprom for ssid and pass
+  Serial.println("Reading EEPROM ssid");
+
+
+  for (int i = 0; i < 32; ++i)
+  {
+    esid += char(EEPROM.read(i));
   }
-  Serial.println("");
-  Serial.println("Connect timed out, opening AP");
-  return false;
+  Serial.println();
+  Serial.print("SSID: ");
+  Serial.println(esid);
+  Serial.println("Reading EEPROM pass");
+
+  for (int i = 32; i < 96; ++i)
+  {
+    epass += char(EEPROM.read(i));
+  }
+  Serial.print("PASS: ");
+  Serial.println(epass);
+
+
+  WiFi.begin(esid.c_str(), epass.c_str());
 }
 void createWebServer(void)
 {
@@ -163,66 +182,16 @@ void setupAP(void) {
   launchWeb();
   Serial.println("over");
 }
-void _setup(void) {
-  Serial.println();
-  Serial.println("Disconnecting current wifi connection");
-  WiFi.disconnect();
-  EEPROM.begin(512); //Initialasing EEPROM
-  delay(10);
-  pinMode(15, INPUT);
-  Serial.println();
-  Serial.println();
-  Serial.println("Startup");
 
-  //---------------------------------------- Read eeprom for ssid and pass
-  Serial.println("Reading EEPROM ssid");
-
-
-  for (int i = 0; i < 32; ++i)
-  {
-    esid += char(EEPROM.read(i));
-  }
-  Serial.println();
-  Serial.print("SSID: ");
-  Serial.println(esid);
-  Serial.println("Reading EEPROM pass");
-
-  for (int i = 32; i < 96; ++i)
-  {
-    epass += char(EEPROM.read(i));
-  }
-  Serial.print("PASS: ");
-  Serial.println(epass);
-
-
-  WiFi.begin(esid.c_str(), epass.c_str());
+bool checkStatus(void) {
+  return WiFi.status() == WL_CONNECTED;
 }
-bool _loop(void) {
-  if ((WiFi.status() == WL_CONNECTED))
+bool connecting(void) {
+  while ((WiFi.status() != WL_CONNECTED))
   {
-    if (testWifi() && (digitalRead(15) != 1))
-    {
-      Serial.println(" connection status positive");
-      return true;
-    }
-    else
-    {
-      Serial.println("Connection Status Negative / D15 HIGH");
-      Serial.println("Turning the HotSpot On");
-      //launchWeb();
-      //setupAP();// Setup HotSpot
-      return false;
-    }
-  }
-  else
-  {
-    /*while ((WiFi.status() != WL_CONNECTED))
-      {
-      Serial.print(".");
-      delay(100);
-      server.handleClient();
-      }*/
-    return false;
+    Serial.print(".");
+    delay(100);
+    server.handleClient();
   }
 }
 }
