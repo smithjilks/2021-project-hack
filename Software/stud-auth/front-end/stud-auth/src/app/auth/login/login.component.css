@@ -1,0 +1,43 @@
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-spinner{
+  margin: auto;
+}
+
+:host {
+  display: block;
+  margin: 1rem, auto;
+  text-align: center;
+}
+
+
+mat-form-field,
+textarea {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+mat-card{
+  width: 300px;
+  min-height: 50%;
+  background: rgba(40, 23, 72, 0.1);
+  margin: auto;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: medium;
+}
+
+button {
+  width: 50%;
+  margin-top: 5rem;
+  color: white;
+}
+
+
+
+
