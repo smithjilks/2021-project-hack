@@ -34,12 +34,16 @@ export class AuthService{
     return this.userId;
   }
 
+  getUserType(){
+    return this.userType;
+  }
+
   createUser(email: string, password:string){
     const authData: AuthData = {
       email: email,
       password: password
     };
-    this.http.post(BACKEND_URL + "/signup", authData)
+    this.http.post(BACKEND_URL + "/register", authData)
     .subscribe(response =>{
       this.router.navigate(["/"]);
     }, error =>{
