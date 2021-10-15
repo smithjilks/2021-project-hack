@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import {Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
-const BACKEND_URL = environment.apiUrl + "/user/"
+const BACKEND_URL = environment.apiUrl + "/users"
 
 
 @Injectable({
@@ -17,7 +17,7 @@ export class AuthService{
   private token: string | null = null;
   private tokenTimer: any;
   private userId: string | null = null;
-  private userType: string | null = null;
+  private userType: string;
   private authStatusListener = new Subject<boolean>();
 
   constructor(private http: HttpClient, private router: Router){}
@@ -41,7 +41,8 @@ export class AuthService{
   createUser(email: string, password:string){
     const authData: AuthData = {
       email: email,
-      password: password
+      password: password,
+      userType: "non-admin"
     };
     this.http.post(BACKEND_URL + "/register", authData)
     .subscribe(response =>{
@@ -53,14 +54,16 @@ export class AuthService{
   }
 
   loginUser(email: string, password: string){
-    const authData: AuthData = {
+    const authData ={
       email: email,
-      password: password
+      password: password,
     }
     this.http.post<{token: string, expiresIn: number, userId: string, userType: string}>(BACKEND_URL + "/login", authData)
     .subscribe(response =>{
       const token = response.token;
       this.token = token;
+
+      console.log(response.userType)
       if(token){
         const expiresInDuration = response.expiresIn;
         this.setAuthTimer(expiresInDuration)
@@ -97,7 +100,7 @@ export class AuthService{
       this.token = authInformation.token;
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
-      this.userType = authInformation.userType;
+      this.userType = authInformation.userType || '';
 
       this.setAuthTimer(expiresIn/ 1000);
       this.authStatusListener.next(true);
@@ -111,7 +114,7 @@ export class AuthService{
     clearTimeout(this.tokenTimer)
     this.clearAuthData();
     this.userId = null;
-    this.router.navigate(["/"]);
+    this.router.navigate(["/auth/login"]);
   }
 
   private setAuthTimer(duration: number){
