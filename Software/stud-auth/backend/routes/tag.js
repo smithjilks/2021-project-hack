@@ -2,19 +2,18 @@ const express = require("express");
 
 const tagController = require("../controllers/tag");
 const checkAuth = require("../middleware/check-auth");
-const extractFile = require("../middleware/file");
 
 
 
 const router = express.Router();
 
-router.post("", checkAuth, extractFile, tagController.validateTag);
+router.post("/validateTag", tagController.validateTag);
 
-router.get("", tagController.getTags);
+//router.get("", tagController.getTags);
 
-router.get("/:id", tagController.getTag);
+//router.get("/:id", checkAuth,tagController.getTag);
 
-router.put("/:id", checkAuth, extractFile, tagController.updateTag)
+router.put("/:id", checkAuth, tagController.updateTag)
 
 router.delete("/:id", checkAuth, tagController.deleteTag);
 
