@@ -21,7 +21,7 @@ export class StudentsService {
     studentData.append("lastName", lastName);
     studentData.append("email", email);
     studentData.append("regNumber", regNumber);
-    studentData.append("image", image, firstName + "_" + lastName)
+    studentData.append("image", image, firstName)
     studentData.append("rfidTag", rfidTag);
 
     this.http.post<{message : string, student: Student}>(BACKEND_URL, studentData)
@@ -43,7 +43,7 @@ export class StudentsService {
       studentData.append("lastName", lastName);
       studentData.append("email", email);
       studentData.append("regNumber", regNumber);
-      studentData.append("image", image, firstName + "_" + lastName);
+      studentData.append("image", image, regNumber);
       studentData.append("rfidTag", rfidTag);
 
     } else{
