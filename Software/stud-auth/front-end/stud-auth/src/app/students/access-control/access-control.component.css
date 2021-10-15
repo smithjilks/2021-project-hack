@@ -1,0 +1,50 @@
+.access-control-card {
+  max-width: 400px;
+  width: 400px;
+  min-height: 50%;
+  background: rgba(40, 23, 72, 0.1);
+  margin: auto;
+  font-size: medium;
+  align-self: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.access-control-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-spinner{
+  margin: auto;
+}
+
+:host {
+  display: block;
+  margin: 1rem, auto;
+  text-align: center;
+}
+
+
+mat-form-field,
+textarea {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+
+button {
+  width: 50%;
+  margin-top: 5rem;
+  color: white;
+}
+
+
+
+
