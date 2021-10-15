@@ -1,4 +1,5 @@
 const Student = require('../models/student');
+const Tag = require('../models/tag');
 
 
 exports.createStudent = (req, res) => {
@@ -13,6 +14,8 @@ exports.createStudent = (req, res) => {
   });
 
   student.save().then(createdStudent =>{
+
+    Tag.updateOne({isAssigned: true}, {rfid: student.rfid})
     res.status(201).json({
       mesaage: "Student added successfully",
       sudent: {
@@ -40,7 +43,7 @@ exports.updateStudent = (req, res, next) =>{
     lastName: req.body.lastName,
     email: req.body.email,
     regNumber: req.body.regNumber,
-    magePath: imagePath,
+    imagePath: imagePath,
     rfidTag: req.body.rfidTag
   });
 

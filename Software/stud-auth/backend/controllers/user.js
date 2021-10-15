@@ -12,7 +12,6 @@ exports.createUser = (req, res, next) =>{
        password: hash,
        userType: req.body.userType
      });
-
      user.save()
      .then(result =>{
        res.status(210).json({
@@ -39,11 +38,11 @@ exports.createUser = (req, res, next) =>{
         messsage: 'Auth failed'
       });
     }
-
     fetchedUser = user;
 
     bcrypt.compare(req.body.password, user.password)
     .then(result =>{
+
     if(!result){
       return res.status(401).json({
         messsage: 'Auth failed'
