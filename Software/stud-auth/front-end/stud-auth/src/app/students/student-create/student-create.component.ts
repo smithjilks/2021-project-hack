@@ -8,6 +8,7 @@ import { Student } from '../student.model';
 import {mimeType} from '../mime-type.validator';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { RfidService } from '../rfid.service';
 
 @Component({
   selector: 'app-init-student',
@@ -20,15 +21,23 @@ export class StudentCreateComponent implements OnInit {
   isLoading = true;
   private studentId: string;
   private authStatusSub: Subscription;
+  private rfidSubscription: Subscription;
   student: Student;
   imagePreview: string;
   form: FormGroup;
   private rfidTag: string;
 
   constructor(
+    private rfidService: RfidService,
     public studentsService: StudentsService,
     public route: ActivatedRoute,
     private authService: AuthService){
+      this.rfidSubscription = rfidService
+      .getRFID()
+      .subscribe((rfid: string) => {
+        this.rfidTag = rfid;
+        this.isLoading = false;
+      });
 
   }
 
@@ -93,7 +102,12 @@ export class StudentCreateComponent implements OnInit {
 
   onSaveStudent(){
 
-    if(this.form.invalid){
+    if(!this.form.value.firstName ||
+      !this.form.value.lastName ||
+      !this.form.value.email ||
+      !this.form.value.regNumber ||
+      !this.form.value.image ){
+      console.log(this.form.value)
       return
     }
 
